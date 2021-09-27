@@ -27,5 +27,5 @@ while True:
     GPIO.output(4, 1)     # set output to 3.3V
     sleep(0.5)            # wait 0.5 sec
 
-    GPIO.add_event_detect(5, GPIO.RISING, callback=call_back(12), bouncetime=100)
-    GPIO.add_event_detect(6, GPIO.RISING, callback=call_back(20), bouncetime=100)
+    '''GPIO.add_event_detect(5, GPIO.RISING, callback=call_back(12), bouncetime=100)
+    GPIO.add_event_detect(6, GPIO.RISING, callback=call_back(20), bouncetime=100)'''
