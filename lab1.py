@@ -32,7 +32,3 @@ while True:
     GPIO.add_event_detect(6, GPIO.RISING, callback=call_back, bouncetime=100)
   except KeyboardInterrupt:
     print('\nExiting')
-
-  pwm.stop()
-  GPIO.cleanup()
-  break
