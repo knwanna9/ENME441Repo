@@ -22,14 +22,14 @@ def call_back(pin):
   pwm.stop()
   GPIO.cleanup()
 
+GPIO.add_event_detect(5, GPIO.RISING, callback=call_back, bouncetime=100)
+GPIO.add_event_detect(6, GPIO.RISING, callback=call_back, bouncetime=100)
+
 while True:
   try:
     GPIO.output(4, 0)     # set output to 0V
     sleep(0.5)            # wait 0.5 sec
     GPIO.output(4, 1)     # set output to 3.3V
     sleep(0.5)            # wait 0.5 sec
-
-    GPIO.add_event_detect(5, GPIO.RISING, callback=call_back, bouncetime=100)
-    GPIO.add_event_detect(6, GPIO.RISING, callback=call_back, bouncetime=100)
   except KeyboardInterrupt:
     print('\nExiting')
