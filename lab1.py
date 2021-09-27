@@ -19,8 +19,6 @@ def call_back(pin):
   except KeyboardInterrupt:       # stop gracefully on ctrl-C
     print('\nExiting')
 
-  pwm.stop()
-  GPIO.cleanup()
 
 GPIO.add_event_detect(5, GPIO.RISING, callback=call_back, bouncetime=100)
 
