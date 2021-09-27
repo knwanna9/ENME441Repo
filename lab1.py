@@ -9,7 +9,7 @@ GPIO.setup(12, GPIO.OUT)
 GPIO.setup(20, GPIO.OUT)
 
 def call_back(pin):
-  pwm = GPIO.PWM(12, 100) # create PWM object @ 100 Hz 
+  pwm = GPIO.PWM(16, 100) # create PWM object @ 100 Hz 
   try:
     pwm.start(0)                  # initiate PWM at 0% duty cycle
     while 1:
