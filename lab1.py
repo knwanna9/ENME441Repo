@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 from time import sleep
-GPIO.cleanup()
+
 GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(4, GPIO.OUT)
@@ -23,7 +23,6 @@ def call_back(pin):
   GPIO.cleanup()
 
 GPIO.add_event_detect(5, GPIO.RISING, callback=call_back, bouncetime=100)
-GPIO.add_event_detect(6, GPIO.RISING, callback=call_back, bouncetime=100)
 
 while True:
   try:
