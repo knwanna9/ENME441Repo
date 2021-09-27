@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 from time import sleep
+GPIO.cleanup()
 GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(4, GPIO.OUT)
