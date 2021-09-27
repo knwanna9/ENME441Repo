@@ -1,1 +1,1 @@
-import p1
+import lab1
