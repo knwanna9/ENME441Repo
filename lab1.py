@@ -22,8 +22,8 @@ def call_back(pin):
   pwm.stop()
   GPIO.cleanup()
 
-GPIO.add_event_detect(5, GPIO.RISING, callback=call_back, bouncetime=100)
-GPIO.add_event_detect(6, GPIO.RISING, callback=call_back, bouncetime=100)
+GPIO.add_event_detect(5, GPIO.RISING, callback=call_back(12), bouncetime=100)
+GPIO.add_event_detect(6, GPIO.RISING, callback=call_back(20), bouncetime=100)
 
 while True:
   try:
