@@ -12,10 +12,9 @@ def call_back(pin):
   p = 19 if pin == 5 else 26
   pwm = GPIO.PWM(p, 100)
   pwm.start(0)     # initiate PWM at 0% duty cycle
-  while 1:
-    for dc in range(101)+range(100,-1,-1):       # loop duty cycle from 0 to 100  
-      pwm.ChangeDutyCycle(dc)   # set duty cycle  
-      sleep(0.01) 
+  for dc in range(101)+range(100,-1,-1):       # loop duty cycle from 0 to 100  
+    pwm.ChangeDutyCycle(dc)   # set duty cycle  
+    sleep(0.01) 
  
 
 
