@@ -2,7 +2,7 @@ import RPi.GPIO as gpio
 import time
 
 # Define input port numbers:
-in1, in2 = 17, 27
+in1, in2 = 5, 6
 gpio.setmode(gpio.BCM)
 gpio.setup(in1, gpio.IN, pull_up_down=gpio.PUD_DOWN)
 gpio.setup(in2, gpio.IN, pull_up_down=gpio.PUD_DOWN)
