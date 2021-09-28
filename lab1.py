@@ -21,7 +21,7 @@ def call_back(pin):
     print('\nExiting')'''
 
 
-GPIO.add_event_detect(7, GPIO.RISING, callback=call_back, bouncetime=100)
+GPIO.add_event_detect(5, GPIO.RISING, callback=call_back, bouncetime=100)
 
 while True:
   try:
