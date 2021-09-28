@@ -9,11 +9,18 @@ GPIO.setup(19, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
 
 def call_back(pin):
- print("Rise and shine")
+  p = 19 if pin = 5 else 26
+  pwm = GPIO.PWM(p, 100)
+  pwm.start(0)     # initiate PWM at 0% duty cycle
+  while 1:
+    for dc in range(101)+range(101,-1,-1):       # loop duty cycle from 0 to 100  
+      pwm.ChangeDutyCycle(dc)   # set duty cycle  
+      sleep(0.01) 
  
 
 
 GPIO.add_event_detect(5, GPIO.RISING, callback=call_back, bouncetime=100)
+GPIO.add_event_detect(6, GPIO.RISING, callback=call_back, bouncetime=100)
 
 while True:
   try:
