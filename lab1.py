@@ -9,7 +9,7 @@ GPIO.setup(19, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
 
 def call_back(pin):
-  p = 19 if pin = 5 else 26
+  p = 19 if pin == 5 else 26
   pwm = GPIO.PWM(p, 100)
   pwm.start(0)     # initiate PWM at 0% duty cycle
   while 1:
