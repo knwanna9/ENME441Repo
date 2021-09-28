@@ -4,7 +4,7 @@ from time import sleep
 
 GPIO.setup(7, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(6, GPIO.OUT)
+GPIO.setup(4, GPIO.OUT)
 GPIO.setup(13, GPIO.OUT)
 GPIO.setup(19, GPIO.OUT)
 
@@ -25,9 +25,9 @@ GPIO.add_event_detect(7, GPIO.RISING, callback=call_back, bouncetime=100)
 
 while True:
   try:
-    GPIO.output(6, 0)     # set output to 0V
+    GPIO.output(4, 0)     # set output to 0V
     sleep(0.5)            # wait 0.5 sec
-    GPIO.output(6, 1)     # set output to 3.3V
+    GPIO.output(4, 1)     # set output to 3.3V
     sleep(0.5)            # wait 0.5 sec
   except KeyboardInterrupt:
     print('\nExiting')
