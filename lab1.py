@@ -31,6 +31,7 @@ while True:
     sleep(0.5)            # wait 0.5 sec
   except KeyboardInterrupt:
     print('\nExiting')
-    break
-  finally:
     GPIO.cleanup()
+    break
+    
+  
