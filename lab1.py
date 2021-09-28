@@ -2,15 +2,16 @@ import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 from time import sleep
 
-GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(4, GPIO.OUT)
-GPIO.setup(12, GPIO.OUT)
-GPIO.setup(20, GPIO.OUT)
+GPIO.setup(7, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(6, GPIO.OUT)
+GPIO.setup(13, GPIO.OUT)
+GPIO.setup(19, GPIO.OUT)
 
 def call_back(pin):
- print('No boi')
-'''pwm = GPIO.PWM(16, 100) # create PWM object @ 100 Hz 
+ print("Rise and shine")
+ 
+ '''pwm = GPIO.PWM(16, 100) # create PWM object @ 100 Hz 
  # initiate PWM at 0% duty cycle
     while 1:
       for dc in range(101):       # loop duty cycle from 0 to 100  
@@ -20,7 +21,7 @@ def call_back(pin):
     print('\nExiting')'''
 
 
-GPIO.add_event_detect(5, GPIO.RISING, callback=call_back, bouncetime=100)
+GPIO.add_event_detect(7, GPIO.RISING, callback=call_back, bouncetime=100)
 
 while True:
   try:
@@ -31,3 +32,5 @@ while True:
   except KeyboardInterrupt:
     print('\nExiting')
     break
+  finally:
+    GPIO.cleanup()
