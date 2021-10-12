@@ -29,11 +29,11 @@ class Joystick:
  
   def getX(self):
     X = self.pcf8591.read(0)
-    Joystick.pcf8591.write(X)
+    self.pcf8591.write(X)
     return X
   
   def getY(self):
     Y = self.pcf8591.read(1)
-    Joystick.pcf8591.write(Y)
+    self.pcf8591.write(Y)
     return Y
 		 
