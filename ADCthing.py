@@ -23,8 +23,7 @@ class PCF8591:
           print ("Error: Device address: 0x%2X \n%s" % (self.address,e))
 
 class Joystick:
-  X = 0
-  Y = 0
+
   def __init__(self,address):
     self.pcf8591 = PCF8591(address)
   def getX(self):

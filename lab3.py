@@ -3,7 +3,9 @@ from time import sleep
 
 while True:
   try:
-    print('{:d} , {:d}'. format(Joystick.getX,Joystick.getY))
+    X = Joystick.getX()
+    Y = Joystick.getY()
+    print('{:d} , {:d}'. format(X,Y))
     sleep(0.1)
   except KeyboardInterrupt:
     print('\nExiting')
