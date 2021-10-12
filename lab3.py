@@ -1,7 +1,7 @@
 from ADCthing import Joystick
 from time import sleep
 
-LAB3_stick = Joystick(0x40)
+LAB3_stick = Joystick(0x43)
 while True:
   try:
     X = LAB3_stick.getX()
