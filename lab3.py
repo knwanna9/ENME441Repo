@@ -6,7 +6,7 @@ while True:
   try:
     X = LAB3_stick.getX()
     Y = LAB3_stick.getY()
-    print('  %3d,  %3d' % (X,Y))
+    print('%3d, %3d' % (X,Y))
     sleep(0.1)
   except KeyboardInterrupt:
     print('\nExiting')
