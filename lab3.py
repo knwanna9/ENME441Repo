@@ -1,7 +1,7 @@
 from ADCthing import Joystick
 from time import sleep
 
-whille True:
+while True:
   try:
     print('{:d} , {:d}'. format(Joystick.getX,Joystick.getY))
     sleep(0.1)
