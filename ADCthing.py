@@ -22,16 +22,19 @@ class PCF8591:
       except Exception as e:
           print ("Error: Device address: 0x%2X \n%s" % (self.address,e))
 
+#Create new class: Joystick
 class Joystick:
 
   def __init__(self,address):
-    self.pcf8591 = PCF8591(address)
+    self.pcf8591 = PCF8591(address) #extend via composition
  
+  #Read and print x-position from channel 1
   def getX(self):
-    X = self.pcf8591.read(1)
+    X = self.pcf8591.read(1) # 
     self.pcf8591.write(X)
     return X
-  
+    
+  #Read and print y-position from channel 2
   def getY(self):
     Y = self.pcf8591.read(2)
     self.pcf8591.write(Y)
