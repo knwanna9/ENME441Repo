@@ -6,7 +6,7 @@ print("""
 Content-type: text/html \n\n
 <html>
 <body>
-<form action = 'cgi-bin/html-test.py' method = 'POST'>
+<form action = '/cgi-bin/html-test.py' method = 'POST'>
 <input type = 'Submit' value = 'create a new page'>
 </form>
 </body>
