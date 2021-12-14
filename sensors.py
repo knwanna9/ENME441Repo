@@ -6,7 +6,11 @@ import time
 import multiprocessing
 import smbus                    #import SMBus module of I2C
 import math
+from servo import *
+import json
+from urllib.request import urlopen
 
+GPIO.setwarnings(False)
 #GPIO Mode (BOARD / BCM)
 GPIO.setmode(GPIO.BCM)
 
@@ -17,6 +21,23 @@ GPIO_ECHO = 19
 #set GPIO direction (IN / OUT)
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
+
+motorpins = [16,20,21,13] 
+for pin in motorpins:
+  GPIO.setup(pin, GPIO.OUT, initial=0)
+# lArmPin = 16 ,xRotPin = 21, yRotPin = 20, leftMPin = 13
+
+dcMin = 3
+dcMax = 12
+
+pwmx = GPIO.PWM(xRotPin, 50) # controls x rotation servo
+pwmy = GPIO.PWM(yRotPin, 50) # controls y rotation servo
+pwmL = GPIO.PWM(lArmPin, 50) # controls launch arm servo
+pwmM = GPIO.PWM(leftMPin, 50) # controls flywheels
+pwmx.start(7.5)
+pwmy.start(7.5)
+pwmL.start(3)
+pwmM.start(0)
 
 #some MPU6050 Registers and their Address
 PWR_MGMT_1   = 0x6B
@@ -85,8 +106,8 @@ def readAngle(rot):
     Gz = gyro_z/131.0
     #rad1=math.atan2(Ax,math.sqrt((Ay*Ay)+(Az*Az)))
     #rad2=math.atan2(Ay,math.sqrt((Ax*Ax)+(Az*Az)))
-    rot[0]=-Gy
-    rot[1]=Gz
+    rot[0]=Gz
+    rot[1]=-Gy
     time.sleep(1)
 
 #Read distance fromUltrasonic Sensor
@@ -117,6 +138,23 @@ def distance(dist):
     # and divide by 2, because there and back
     dist.value = (TimeElapsed * 34300) / 2
 
+
+
+url = "https://api.thingspeak.com/channels/1558420/feeds.json?api_key=MSQKXFOAG2UMD4NZ&results=1"
+response = urlopen(url)
+jsonData = json.loads(response.read())
+feeds = jsonData["feeds"]
+hor_angle = feeds[0]['field1'] if feeds != [] else '90' #what angle to go to
+ver_angle = feeds[0]['field2'] if feeds != [] else '90' #what angle to go to
+button_press = feeds[0]['field3'] if feeds != [] else '0' #which button was pressed
+if hor_angle == 'None':
+      hor_angle ='90'
+if ver_angle == 'None':
+      ver_angle ='90'
+if button_press == 'None':
+      button_press ='0'
+
+
 #Run ultrasonic code
 dist = multiprocessing.Value('f')
 us = multiprocessing.Process(target=distance,args=(dist,))
@@ -125,13 +163,47 @@ us.start()
 
 #Run Gyroscope code
 rot = multiprocessing.Array('f',2)
+for i in range(2):
+  rot[i] *= 180/math.pi
+
 gyro = multiprocessing.Process(target=readAngle,args=(rot,))
 gyro.daemon = True
 gyro.start()
 
 lcd = LCD()
-def safe_exit(signum, frame):
-    exit(1)
+
+if bool(button_press) == 0:
+  while True:
+    if rot[0] < int(hor_angle):
+      pwmx.servoWrite(rot[0]+0.001)
+    elif rot[0] > int(hor_angle):
+      pwmx.servoWrite(rot[0]-0.001)
+    else:
+      break
+  time.sleep(1)
+  while True:
+    if rot[1] < int(ver_angle):
+      pwmx.servoWrite(rot[1]+0.01)
+    elif rot[1] > int(ver_angle):
+      pwmy.servoWrite(rot[1]-0.001)
+    else:
+      break
+  time.sleep(1)
+
+elif bool(button_press) == 1:
+  #Calculate math and such
+  pwmL.ChangeDutyCycle(3) #load projectile
+  time.sleep(0.5)
+  pwmM.ChangeDutyCycle(100) #run flywheels
+  time.sleep(2)
+  pwmL.ChangeDutyCycle(12) #push projectile into flywheels
+  time.sleep(0.5)
+  pwmL.ChangeDutyCycle(3) #return to starting position
+  pwmM.ChangeDutyCycle(0) #turn off flywheels
+else:
+  pass
+  
+
 try:
   #signal(SIGTERM, safe_exit)
   #signal(SIGHUP, safe_exit)
